@@ -1,0 +1,231 @@
+#:import Image kivy.uix.image
+
+
+#================== Logincreen Design Start ==============
+<LoginScreen>:
+	name : "login"
+
+	MDBoxLayout:
+		orientation: "vertical"	
+		# ============= my topbar start ============
+
+		MDBoxLayout:
+			orientation: "vertical"	
+			size_hint_y: None
+			height: "50dp"
+			md_bg_color: app.theme_cls.primary_color
+
+			MDLabel:
+				text: "Account Access"
+				halign: "center"
+				bold: True
+
+		# ============= my topbar end ============
+
+		MDAnchorLayout:
+			anchor_x: "center"
+			anchor_y: "center"
+
+			MDGridLayout:
+				cols: 1
+				size_hint: 0.8, 0.85
+				spacing: 35
+				padding: 5
+				#md_bg_color: app.theme_cls.primary_color
+
+				MDBoxLayout:
+					orientation: "vertical"
+					adaptive_height: True
+					spacing: 25
+					
+					MDLabel:
+						text: "Email"
+						md_bg_color: app.theme_cls.primary_color
+						size_hint_y: .3
+
+					MDTextField:
+						id: email
+						multiline: False
+						mode: "round"
+						icon_left: "email"
+
+
+
+				MDBoxLayout:
+					orientation: "vertical"
+					adaptive_height: True
+					spacing: 25
+
+					MDLabel:
+						text: "Password"
+						size_hint_y: .3
+
+					MDTextField:
+						id: password
+						multiline: False
+						password: True
+						mode: "round"
+						icon_left: "key-variant"
+
+				MDBoxLayout:
+					orientation: "vertical"
+					adaptive_height: True
+
+					MDAnchorLayout:
+						anchor_x: "center"
+						anchor_y: "center"
+
+						MDRaisedButton:
+							text: "Sign in"
+							on_release: root.get_user_credential()
+#================== LoginScreen Design End ==============
+
+
+#================== MainScreen Design Start ==============
+
+<MainScreen>:
+
+	MDNavigationLayout:
+
+		MDScreenManager:
+
+			MDScreen:
+
+				MDTopAppBar:
+					title: "ELIACOS IDENTIFICATION "
+					elevation: 4
+					pos_hint: {"top": 1}
+					#md_bg_color: "#e7e4c0"
+					#specific_text_color: "#4a4939"
+					right_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+
+				MDGridLayout:
+					cols: 1
+					rows: 1
+					pos_hint: {'top':.9}
+
+					
+
+		MDNavigationDrawer:
+			id: nav_drawer
+			radius: (0, 16, 16, 0)
+			size_hint_x: .75
+
+			MDNavigationDrawerMenu:
+
+				MDNavigationDrawerHeader:
+					title: "Manu"
+					#title_color: "#4a4939"
+					#text: "Header text"
+					spacing: "4dp"
+					padding: "12dp", 0, 0, "56dp"
+
+				MDFlatButton:
+					text: "Verify student"
+					size_hint_x: 1
+					halign: "left"
+					font_size: "18sp"
+					on_release: root.to_profile_page()
+
+
+
+				MDFlatButton:
+					text: "Logout"
+					size_hint_x: 1
+					halign: "left"
+					font_size: "18sp"
+					on_release: root.log_user_out()
+
+#================== MainScreen Design End ==============
+
+				
+
+#================== Main ProfileCaptureScreen Design Start ==============
+
+<ProfileCaptureScreen>:
+	MDBoxLayout:
+		orientation: "vertical"
+
+		MDGridLayout:
+			rows: 1
+			cols: 2
+			size_hint_y: None
+			height: "50sp"
+			md_bg_color: app.theme_cls.primary_color
+
+			MDIconButton:
+				icon: "arrow-left"
+				on_release: 
+					root.manager.transition.direction = "left"
+					root.manager.current = "MainScreen"
+
+			MDLabel:
+				text: "STUDENT IDENTIFICATION"
+				halign: "center"
+				bold: True
+
+		MDBoxLayout:
+			orientation: "vertical"
+			padding: "15sp"
+
+			MDAnchorLayout:
+				anchor_x: "center"
+				anchor_y: "center"
+
+				MDBoxLayout:
+					orientation: "vertical"
+					size_hint: .8, .8
+					md_bg_color: app.theme_cls.primary_color
+
+					Image: #use Image if capturing didn't work
+						id: profile_pic
+						source: 'img/ai.jpeg'
+						size: self.texture_size
+						fit_mode: 'fill'
+
+			
+			MDGridLayout:
+				cols: 1
+				size_hint_x: .5
+				pos_hint: {'center_x': .5}
+
+				MDBoxLayout:
+					orientation: "vertical"
+					adaptive_height: True
+					size_hint_x: .5
+					#pos_hint: {'y': 1}
+					spacing: "7sp"
+					#md_bg_color: app.theme_cls.primary_color
+
+					MDRaisedButton:
+						text: "Capture face"
+						size_hint_x: 1
+
+						on_release: root.capture_face()
+
+
+					MDRaisedButton:
+						text: "  Reset  "
+						size_hint_x: 1
+						on_release: root.reset_face_capturing()
+
+					MDRaisedButton:
+						text: "  Verify Detail "
+						size_hint_x: 1
+						on_release: root.verify_captured_face()
+
+
+
+
+
+
+
+
+
+
+			
+		
+
+
+
+#================== Main ProfileCaptureScreen Design End ==============
